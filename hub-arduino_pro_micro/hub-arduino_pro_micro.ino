@@ -15,6 +15,7 @@ boolean hasAtLeastABlockConnected = false;
 Bounce bt = Bounce();
 
 void setup() {
+  // Disabling Watchdog
   wdt_disable();
 
   /*
@@ -43,6 +44,7 @@ void setup() {
      ==============
   */
 
+  // Enabling Watchdog with 120 miliseconds
   wdt_enable(WDTO_120MS);
   //  wdt_enable(WDTO_1S);
 }
@@ -101,5 +103,6 @@ void loop() {
   //sendIndividualOSCMessages();
   // sendConsolidatedOSCMessage();
 
+// Reseting Watchdog
   wdt_reset();
 }

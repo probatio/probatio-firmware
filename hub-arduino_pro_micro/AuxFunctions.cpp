@@ -162,48 +162,85 @@ boolean sendIndividualMIDIMessages(int threshold) {
   for (int i = 0; i < QUANTITY_BLOCKS; i++) {
     if (blocks[i]->isConnected) {
       hasAtLeastABlockConnected = hasAtLeastABlockConnected | true;
-      for (int j = 0; j < blocks[i]->quantity; j++) {
-        if (abs(blocks[i]->values[j].getValue() - blocks[i]->values[j].getLastValue()) >= threshold) {
-          //controlChange(blocks[i]->channel, blocks[i]->control + j, blocks[i]->values[j].getValue()/2);
-          int currentControl = blocks[i]->control + j;
-          int currentValue = blocks[i]->values[j].getValue() / 2;
-          if (currentControl != 47 & currentControl != 24) {
-            
-            int note = 0;
-            boolean isNote = false;
-            
-            if (currentControl >= 10 & currentControl <= 17) {
-              note = currentControl + 26;
-              isNote = true;
-            } else if (currentControl == 38) {
-              note = 44;
-              isNote = true;
-            } else if (currentControl == 42) {
-              note = 45;
-              isNote = true;
-            } else if (currentControl == 44) {
-              note = 46;
-              isNote = true;
-            } else if (currentControl == 46) {
-              note = 47;
-              isNote = true;
-            } else {
-              isNote = false;
-            }
+      for (int valueIndex = 0; valueIndex < blocks[i]->quantity; valueIndex++) {
+        if (abs(blocks[i]->values[valueIndex].getValue() - blocks[i]->values[valueIndex].getLastValue()) >= threshold) {
 
-            if (isNote) {
-              if(currentValue == 127){
-                noteOn(0, note, 127);
-                MidiUSB.flush();
-              } else if(currentValue == 0){
-                noteOff(0, note, 0);
-                MidiUSB.flush();
-              }
-            } else {
-              controlChange(0, currentControl, currentValue);
+          int currentControl = blocks[i]->control + valueIndex;
+
+          /*
+          Here, the block value that goes from 0 to 255 
+          now is converted from 0 to 127 for MIDI messages
+          */
+          int currentValue = blocks[i]->values[valueIndex].getValue() / 2;
+
+          int note = 0;
+          boolean isNote = false;
+
+          /*
+          ===============================
+          The following if-else is just 
+          to select the values related to buttons
+          */
+
+          // The indexes from 10 to 17 are related to buttons
+          if (currentControl >= 10 & currentControl <= 17) {
+            note = currentControl + 26;
+            isNote = true;
+          
+          // control 38 is the button of the dof4_joystick_1
+          } else if (currentControl == 38) {
+            // mapping to MIDI Note 44
+            note = 44;
+            isNote = true;
+          
+          // control 42 is the button of the dof4_joystick_2
+          } else if (currentControl == 42) {
+            // mapping to MIDI Note 45
+            note = 45;
+            isNote = true;
+            
+          // control 44 is the button of the crank_1
+          } else if (currentControl == 44) {
+            // mapping to MIDI Note 46
+            note = 46;
+            isNote = true;
+          
+          // control 46 is the button of the dial_1
+          } else if (currentControl == 46) {
+            // mapping to MIDI Note 46
+            note = 47;
+            isNote = true;
+          } else {
+            isNote = false;
+          }
+
+          /*
+          the if-else for selecting the 
+          values related to buttons ends here
+          ===============================
+          */
+
+          /*
+          In the following if-else:
+          If the value is mapped as a note (in the previous case, buttons),
+          when it reaches 127, send a Note On;
+          when it reaches 0, send a Note Off.
+          */
+          if (isNote) {
+            if (currentValue == 127) {
+              noteOn(0, note, 127);
+              MidiUSB.flush();
+            } else if (currentValue == 0) {
+              noteOff(0, note, 0);
               MidiUSB.flush();
             }
+          } else {
+            // if the block's value is not a button,
+            // use the control number as the MIDI CC
+            controlChange(0, currentControl, currentValue);
+            MidiUSB.flush();
           }
+
         }
       }
     }
