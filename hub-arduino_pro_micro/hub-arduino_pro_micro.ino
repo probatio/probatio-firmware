@@ -1,4 +1,3 @@
-l
 #include "AuxFunctions.h"
 #include <avr/wdt.h>
 #include <Bounce2.h>
@@ -16,7 +15,7 @@ Bounce bt = Bounce();
 
 void setup() {
   // Disabling Watchdog
-  wdt_disable();
+  //  wdt_disable();
 
   /*
       ==============
@@ -36,6 +35,7 @@ void setup() {
   */
 
   Wire.begin();
+  Wire.setWireTimeout(25000, true);
   Serial.begin(115200);
 
   /*
@@ -45,7 +45,7 @@ void setup() {
   */
 
   // Enabling Watchdog with 120 miliseconds
-  wdt_enable(WDTO_120MS);
+  // wdt_enable(WDTO_120MS);
   //  wdt_enable(WDTO_1S);
 }
 
@@ -103,6 +103,6 @@ void loop() {
   //sendIndividualOSCMessages();
   // sendConsolidatedOSCMessage();
 
-// Reseting Watchdog
-  wdt_reset();
+  // Reseting Watchdog
+  // wdt_reset();
 }
