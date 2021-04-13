@@ -1,34 +1,34 @@
 #include <Arduino.h>
 #include "AuxFunctions.h"
-#include <avr/wdt.h>
-#include <Bounce2.h>
+// #include <avr/wdt.h>
+// #include <Bounce2.h>
 
-#define BUTTON_PIN 7
-#define LED_CONNECTED 9
-#define LED_MAPPING 5
+// #define BUTTON_PIN 7
+// #define LED_CONNECTED 9
+// #define LED_MAPPING 5
 
 int threshold = 1;
 boolean isMapping = true;
 boolean isFirstTime = true;
 boolean hasAtLeastABlockConnected = false;
 
-Bounce bt = Bounce();
+//Bounce bt = Bounce();
 
 void setup()
 {
   // Disabling Watchdog
-  wdt_disable();
+  //wdt_disable();
 
   /*
       ==============
       Board Setup
       ==============
   */
-  pinMode(LED_CONNECTED, OUTPUT);
-  pinMode(LED_MAPPING, OUTPUT);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
-  bt.attach(BUTTON_PIN);
-  bt.interval(5);
+  //pinMode(LED_CONNECTED, OUTPUT);
+  //pinMode(LED_MAPPING, OUTPUT);
+  //pinMode(BUTTON_PIN, INPUT_PULLUP);
+  //bt.attach(BUTTON_PIN);
+  //bt.interval(5);
 
   /*
       ==============
@@ -46,53 +46,52 @@ void setup()
   */
 
   // Enabling Watchdog with 120 miliseconds
-  wdt_enable(WDTO_120MS);
+  //wdt_enable(WDTO_120MS);
   //  wdt_enable(WDTO_1S);
 }
 
 void loop()
 {
-
   /*
     ==============
     Mapping Button
     ==============
   */
 
-  bt.update();
+  //bt.update();
 
-  int value = bt.read();
+  //int value = bt.read();
 
-  if (!isFirstTime)
-  {
-    if (value == LOW)
-    {
-      isMapping = true;
-    }
-    else
-    {
-      isMapping = false;
-    }
-  }
-  else
-  {
-    if (bt.fell())
-    {
-      isFirstTime = false;
-    }
-  }
+  // if (!isFirstTime)
+  // {
+  //   if (value == LOW)
+  //   {
+  //     isMapping = true;
+  //   }
+  //   else
+  //   {
+  //     isMapping = false;
+  //   }
+  // }
+  // else
+  // {
+  //   if (bt.fell())
+  //   {
+  //     isFirstTime = false;
+  //   }
+  // }
 
-  if (isMapping)
-  {
-    threshold = 3;
-  }
-  else
-  {
-    threshold = 1;
-  }
+  // if (isMapping)
+  // {
+  //   threshold = 3;
+  // }
+  // else
+  // {
+  //   threshold = 1;
+  // }
 
-  digitalWrite(LED_MAPPING, isMapping);
-  digitalWrite(LED_CONNECTED, hasAtLeastABlockConnected);
+  // digitalWrite(LED_MAPPING, isMapping);
+  // digitalWrite(LED_CONNECTED, hasAtLeastABlockConnected);
 
   /*
     =================
@@ -116,5 +115,5 @@ void loop()
   // sendConsolidatedOSCMessage();
 
   // Reseting Watchdog
-  wdt_reset();
+  // wdt_reset();
 }
