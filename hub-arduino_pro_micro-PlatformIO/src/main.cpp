@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "AuxFunctions.h"
 #include <avr/wdt.h>
 #include <Bounce2.h>
@@ -13,7 +14,8 @@ boolean hasAtLeastABlockConnected = false;
 
 Bounce bt = Bounce();
 
-void setup() {
+void setup()
+{
   // Disabling Watchdog
   wdt_disable();
 
@@ -48,7 +50,8 @@ void setup() {
   //  wdt_enable(WDTO_1S);
 }
 
-void loop() {
+void loop()
+{
 
   /*
     ==============
@@ -56,27 +59,35 @@ void loop() {
     ==============
   */
 
-  Serial.println("funcionando");
-
   bt.update();
 
   int value = bt.read();
 
-  if (!isFirstTime) {
-    if (value == LOW) {
+  if (!isFirstTime)
+  {
+    if (value == LOW)
+    {
       isMapping = true;
-    } else {
+    }
+    else
+    {
       isMapping = false;
     }
-  } else {
-    if(bt.fell()){
+  }
+  else
+  {
+    if (bt.fell())
+    {
       isFirstTime = false;
     }
   }
 
-  if (isMapping) {
+  if (isMapping)
+  {
     threshold = 3;
-  } else {
+  }
+  else
+  {
     threshold = 1;
   }
 
@@ -104,6 +115,6 @@ void loop() {
   //sendIndividualOSCMessages();
   // sendConsolidatedOSCMessage();
 
-// Reseting Watchdog
+  // Reseting Watchdog
   wdt_reset();
 }
