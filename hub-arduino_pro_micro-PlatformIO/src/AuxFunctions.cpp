@@ -30,23 +30,19 @@ bool isConnected = false;
 //char c_debug[] = "debug";
 
 Block dual_buttons_1(BLOCK_DUAL_BUTTONS_1, SIZE_BLOCK_DUAL_BUTTONS_1, 0, 10, "dual_buttons_1");
-Block obsf_24(BLOCK_OBSF_24, SIZE_BLOCK_OBSF_24, 0, 12, "obsf_24");
-Block obsf_30(BLOCK_OBSF_30, SIZE_BLOCK_OBSF_30, 0, 13, "obsf_30");
-Block cherries_1(BLOCK_CHERRIES_1, SIZE_BLOCK_CHERRIES_1, 0, 14, "cherries_1");
-Block dual_pots_1(BLOCK_DUAL_POTS_1, SIZE_BLOCK_DUAL_POTS_1, 0, 18, "dual_pots_1");
-Block tap_1(BLOCK_TAP_1, SIZE_BLOCK_TAP_1, 0, 20, "tap_1");
-Block tap_2(BLOCK_TAP_2, SIZE_BLOCK_TAP_2, 0, 21, "tap_2");
-Block dual_pistons_1(BLOCK_DUAL_PISTONS_1, SIZE_BLOCK_DUAL_PISTONS_1, 0, 22, "dual_pistons_1");
-Block joystick_1(BLOCK_JOYSTICK_1, SIZE_BLOCK_JOYSTICK_1, 0, 24, "joystick_1");
-Block four_pistons_1(BLOCK_FOUR_PISTONS_1, SIZE_BLOCK_FOUR_PISTONS_1, 0, 27, "four_pistons_1");
-Block four_thumbs_1(BLOCK_FOUR_THUMBS_1, SIZE_BLOCK_FOUR_THUMBS_1, 0, 31, "four_thumbs_1");
-Block dof4_joystick_1(BLOCK_DOF4_JOYSTICK_1, SIZE_BLOCK_DOF4_JOYSTICK_1, 0, 35, "dof4_joystick_1");
-Block dof4_joystick_2(BLOCK_DOF4_JOYSTICK_2, SIZE_BLOCK_DOF4_JOYSTICK_2, 0, 39, "dof4_joystick_2");
-Block crank_1(BLOCK_CRANK_1, SIZE_BLOCK_CRANK_1, 0, 43, "crank_1");
-Block dial_1(BLOCK_DIAL_1, SIZE_BLOCK_DIAL_1, 0, 45, "dial_1");
-Block debug_(BLOCK_DEBUG, SIZE_BLOCK_DEBUG, 0, 47, "debug");
+Block dual_buttons_2(BLOCK_DUAL_BUTTONS_2, SIZE_BLOCK_DUAL_BUTTONS_2, 0, 12, "dual_buttons_2");
+Block quad_buttons_1(BLOCK_QUAD_BUTTONS_1, SIZE_BLOCK_QUAD_BUTTONS_1, 0, 14, "quad_buttons_1");
+Block quad_buttons_2(BLOCK_QUAD_BUTTONS_2, SIZE_BLOCK_QUAD_BUTTONS_2, 0, 18, "quad_buttons_2");
+Block cherries_1(BLOCK_CHERRIES_1, SIZE_BLOCK_CHERRIES_1, 0, 22, "cherries_1");
+Block tap_1(BLOCK_TAP_1, SIZE_BLOCK_TAP_1, 0, 26, "tap_1");
+Block dual_pistons_1(BLOCK_DUAL_PISTONS_1, SIZE_BLOCK_DUAL_PISTONS_1, 0, 28, "dual_pistons_1");
+Block quad_pots_1(BLOCK_QUAD_POTS_1, SIZE_BLOCK_QUAD_POTS_1, 0, 30, "quad_pots_1");
+Block quad_pots_2(BLOCK_QUAD_POTS_2, SIZE_BLOCK_QUAD_POTS_2, 0, 34, "quad_pots_2");
+Block dof4_joystick_1(BLOCK_DOF4_JOYSTICK_1, SIZE_BLOCK_DOF4_JOYSTICK_1, 0, 38, "dof4_joystick_1");
+Block rotary_1(BLOCK_ROTARY_1, SIZE_BLOCK_ROTARY_1, 0, 42, "rotary_1");
+Block rotary_2(BLOCK_ROTARY_2, SIZE_BLOCK_ROTARY_2, 0, 44, "rotary_2");
 
-Block* blocks[QUANTITY_BLOCKS] = {&dual_buttons_1, &obsf_24, &obsf_30, &cherries_1, &dual_pots_1, &tap_1, &tap_2, &dual_pistons_1, &joystick_1, &four_pistons_1, &four_thumbs_1, &dof4_joystick_1, &dof4_joystick_2, &crank_1, &dial_1, &debug_};
+Block* blocks[QUANTITY_BLOCKS] = {&dual_buttons_1, &dual_buttons_2, &quad_buttons_1, &quad_buttons_2, &cherries_1, &tap_1, &dual_pistons_1, &quad_pots_1, &quad_pots_2, &dof4_joystick_1, &rotary_1, &rotary_2};
 
 /*
    =============
@@ -183,36 +179,36 @@ boolean sendIndividualMIDIMessages(int threshold) {
           */
 
           // The indexes from 10 to 17 are related to buttons
-          if (currentControl >= 10 & currentControl <= 17) {
-            note = currentControl + 26;
-            isNote = true;
+          // if (currentControl >= 10 & currentControl <= 17) {
+          //   note = currentControl + 26;
+          //   isNote = true;
           
-          // control 38 is the button of the dof4_joystick_1
-          } else if (currentControl == 38) {
-            // mapping to MIDI Note 44
-            note = 44;
-            isNote = true;
+          // // control 38 is the button of the dof4_joystick_1
+          // } else if (currentControl == 38) {
+          //   // mapping to MIDI Note 44
+          //   note = 44;
+          //   isNote = true;
           
-          // control 42 is the button of the dof4_joystick_2
-          } else if (currentControl == 42) {
-            // mapping to MIDI Note 45
-            note = 45;
-            isNote = true;
+          // // control 42 is the button of the dof4_joystick_2
+          // } else if (currentControl == 42) {
+          //   // mapping to MIDI Note 45
+          //   note = 45;
+          //   isNote = true;
             
-          // control 44 is the button of the crank_1
-          } else if (currentControl == 44) {
-            // mapping to MIDI Note 46
-            note = 46;
-            isNote = true;
+          // // control 44 is the button of the crank_1
+          // } else if (currentControl == 44) {
+          //   // mapping to MIDI Note 46
+          //   note = 46;
+          //   isNote = true;
           
-          // control 46 is the button of the dial_1
-          } else if (currentControl == 46) {
-            // mapping to MIDI Note 46
-            note = 47;
-            isNote = true;
-          } else {
-            isNote = false;
-          }
+          // // control 46 is the button of the dial_1
+          // } else if (currentControl == 46) {
+          //   // mapping to MIDI Note 46
+          //   note = 47;
+          //   isNote = true;
+          // } else {
+          //   isNote = false;
+          // }
 
           /*
           the if-else for selecting the 
