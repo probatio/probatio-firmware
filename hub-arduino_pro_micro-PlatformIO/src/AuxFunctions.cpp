@@ -58,6 +58,7 @@ void requestI2C() {
       quantBlocksConnected++;
     }
   }
+  //Serial.print("quantBlocksConnected: "); Serial.println(quantBlocksConnected);
 }
 
 bool requestFromDevice(Block * _block) {
@@ -69,7 +70,8 @@ bool requestFromDevice(Block * _block) {
     result = true;
     for (int i = 0; i < _block->quantity; i++) {
       _block->lastValues[i].setValue(_block->values[i].getValue());
-      _block->values[i].setValue(Wire.read());
+      //_block->values[i].setValue(Wire.read());
+      Serial.print("Wire.read(): "); Serial.println(Wire.read());
     }
   } else {
     _block->isConnected = false;
@@ -222,20 +224,21 @@ boolean sendIndividualMIDIMessages(int threshold) {
           when it reaches 127, send a Note On;
           when it reaches 0, send a Note Off.
           */
-          if (isNote) {
-            if (currentValue == 127) {
-              noteOn(0, note, 127);
-              MidiUSB.flush();
-            } else if (currentValue == 0) {
-              noteOff(0, note, 0);
-              MidiUSB.flush();
-            }
-          } else {
+          // if (isNote) {
+          //   if (currentValue == 127) {
+          //     noteOn(0, note, 127);
+          //     MidiUSB.flush();
+          //   } else if (currentValue == 0) {
+          //     noteOff(0, note, 0);
+          //     MidiUSB.flush();
+          //   }
+          // } else {
             // if the block's value is not a button,
             // use the control number as the MIDI CC
+            Serial.println(currentControl);
             controlChange(0, currentControl, currentValue);
             MidiUSB.flush();
-          }
+          // }
 
         }
       }

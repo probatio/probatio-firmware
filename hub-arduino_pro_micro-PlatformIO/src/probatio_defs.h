@@ -38,5 +38,8 @@ Probatio addresses and definitions:
 #define BLOCK_ROTARY_2 65
 #define SIZE_BLOCK_ROTARY_2 2
 
-#define QUANTITY_BLOCKS 12
-#define BUFFER_SIZE 35
+#define BLOCK_DEBUG 80
+#define SIZE_BLOCK_DEBUG 4
+
+#define QUANTITY_BLOCKS 13
+#define BUFFER_SIZE 39
